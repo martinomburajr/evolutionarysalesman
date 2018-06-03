@@ -77,6 +77,30 @@ public class Mutation {
         return population;
     }
 
+    public static Chromosome pointExchangeSingle(Chromosome chromosome, City[] cities, int nPointExchange) {
+        Random random = new Random();
+        int randPlacementPosition = random.nextInt(40);
+        if (randPlacementPosition == 0); randPlacementPosition = 5;
+        int randStartPosition = random.nextInt(25);
+        if(randStartPosition + randPlacementPosition >= 49) {
+            randPlacementPosition=20;
+        }
+
+        Chromosome tempchromosome = chromosome;
+
+        int[] splitReverse = splitInsert(chromosome.cityList, randStartPosition, randPlacementPosition, nPointExchange);
+        tempchromosome.cityList = splitReverse;
+
+        double oldCost = chromosome.cost;
+        tempchromosome.calculateCost(cities);
+        double newCost = tempchromosome.getCost();
+        if(oldCost < newCost) {
+        }else{
+            chromosome.cityList = splitReverse;
+        }
+        return chromosome;
+    }
+
     public static Chromosome[] transposition(Chromosome [] population, City [] cityList) {
         return null;
     }

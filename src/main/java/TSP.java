@@ -284,7 +284,7 @@ public class TSP {
                     double thisCost = 0.0;
 
                     while (generation < 100) {
-                        Chromosome[] evolve = evolve(chromosomes, cities);
+                        Chromosome[] evolve = evolve(chromosomes, cities, genMin);
                         chromosomes = evolve;
                         if(generation % 5 == 0 ) 
                             cities = MoveCities(originalCities); //Move from original cities, so they only move by a maximum of one unit.
@@ -339,9 +339,9 @@ public class TSP {
         //################################################################################# UNIMPORTANT ############################################################################
     }
 
-    public static Chromosome[] evolve(Chromosome[] chromosomes, City[] city) {
+    public static Chromosome[] evolve(Chromosome[] chromosomes, City[] city, double currentBest) {
         //Write evolution code here.
-        Chromosome[] evolve = Evolution.Evolve2(chromosomes, city);
+        Chromosome[] evolve = Evolution.Evolve2(chromosomes, city,currentBest);
         return evolve;
     }
 

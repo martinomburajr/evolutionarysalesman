@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Random;
 
 public class GA {
 
@@ -8,8 +9,8 @@ public class GA {
     private static final boolean elitism = true;
 
     // Evolves a population over one generation
-    public static Chromosome[] evolveChromosome(Chromosome[] pop, City[] cities) {
-        Chromosome[] micro = Crossover.micro(pop, cities);
+    public static Chromosome[] evolveChromosome(Chromosome[] pop, City[] cities, double currentBest) {
+      //  Chromosome[] micro = Crossover.micro(pop, cities);
         Chromosome[] newPopulation = new Chromosome[pop.length];
         // Keep our best individual if elitism is enabled
         int elitismOffset = 0;
@@ -18,6 +19,7 @@ public class GA {
             newPopulation[0] =  rank[0];
             elitismOffset = 1;
         }
+        Random random = new Random();
 
         // Crossover population
         // Loop over the new population's size and create individuals from
@@ -27,9 +29,9 @@ public class GA {
             Chromosome parent1 = ParentSelection.tournamentSelection(pop,tournamentSize);
             Chromosome parent2 = ParentSelection.tournamentSelection(pop, tournamentSize);
             // Crossover parents
-            Chromosome child =  crossover(parent1, parent2);
+            Chromosome child = crossover(parent1, parent2);
             child.calculateCost(cities);
-
+//
 //            Chromosome[] temp = new Chromosome[]{parent1, parent2, child};
 //            Arrays.sort(temp, Utility.CHROMOSOME_SORTING_COMPARATOR);
 
@@ -42,6 +44,17 @@ public class GA {
         // Mutate the new population a bit to add some new genetic material
         for (int i = elitismOffset; i < newPopulation.length; i++) {
             mutate(newPopulation[i]);
+        }
+
+
+        Arrays.sort(newPopulation, Utility.CHROMOSOME_SORTING_COMPARATOR);
+        if(newPopulation[0].getCost() >= currentBest) {
+            int i = random.nextInt();
+            if(i % 5 == 0) {
+                Chromosome chromosomeCopy = newPopulation[newPopulation.length-1].deepCopy();
+                Chromosome chromosome = Mutation.pointExchangeSingle(chromosomeCopy, cities, 3);
+                newPopulation[newPopulation.length-1] = chromosome;
+            }
         }
 
         return newPopulation;

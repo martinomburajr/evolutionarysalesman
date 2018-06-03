@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Comparator;
 
 public class Utility {
@@ -79,6 +80,62 @@ public class Utility {
             copy.add(arrayList.get(i));
         }
         return copy;
+    }
+
+    /**
+     * TESTED!
+     * @param arr
+     * @param index
+     * @return
+     */
+    public static int[] wrapAroundForward(int [] arr, int index) {
+        int []finalArr = new int[arr.length];
+        int j = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if(index+i >= arr.length) {
+                finalArr[i] = arr[j];
+                j++;
+            }else{
+                finalArr[i] = arr[index+i];
+            }
+        }
+        return finalArr;
+    }
+
+    /**
+     *
+     * @param arr
+     * @param index
+     * @return
+     */
+    public static int[] wrapAroundReverse(int [] arr, int index) {
+        int []finalArr = new int[arr.length];
+        int j = arr.length-1;
+        for (int i = 0 ; i < arr.length; i++) {
+            if(index-i < 0) {
+                finalArr[i] = arr[j];
+                j--;
+            }else{
+                finalArr[i] = arr[index-i];
+            }
+        }
+        return finalArr;
+    }
+
+    public static boolean hasEverything(int [] arr, ArrayList<Integer> list) {
+        int containCount = 0;
+        for (int i = 0; i < arr.length; i++) {
+            for (int i1 = 0; i1 < list.size(); i1++) {
+                if(list.get(i1) == arr[i]) {
+                    containCount++;
+                    break;
+                }
+            }
+        }
+        if(containCount < arr.length) {
+            return false;
+        }
+        return true;
     }
 
     /**

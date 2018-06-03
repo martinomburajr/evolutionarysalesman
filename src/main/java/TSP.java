@@ -10,10 +10,6 @@ import java.awt.*;
 import javax.swing.*;
 
 public class TSP {
-
-
-
-
     //region Description
     private static final int cityShiftAmount = 60; //DO NOT CHANGE THIS.
 	
@@ -284,13 +280,13 @@ public class TSP {
                     double thisCost = 0.0;
 
                     while (generation < 100) {
-                        Chromosome[] evolve = evolve(chromosomes, cities, genMin);
+                        Chromosome[] evolve = evolve(chromosomes, cities);
                         chromosomes = evolve;
                         if(generation % 5 == 0 ) 
                             cities = MoveCities(originalCities); //Move from original cities, so they only move by a maximum of one unit.
                         generation++;
 
-                            Chromosome.sortChromosomes(chromosomes, populationSize);
+                        Chromosome.sortChromosomes(chromosomes, populationSize);
                         double cost = chromosomes[0].getCost();
                         thisCost = cost;
 
@@ -339,9 +335,9 @@ public class TSP {
         //################################################################################# UNIMPORTANT ############################################################################
     }
 
-    public static Chromosome[] evolve(Chromosome[] chromosomes, City[] city, double currentBest) {
+    public static Chromosome[] evolve(Chromosome[] chromosomes, City[] city) {
         //Write evolution code here.
-        Chromosome[] evolve = Evolution.Evolve2(chromosomes, city,currentBest);
+        Chromosome[] evolve = Evolution.Evolve2(chromosomes, city);
         return evolve;
     }
 

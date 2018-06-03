@@ -61,7 +61,7 @@ class Evolution{
 	 * @param cityList List of ciies, needed for the Chromosome constructor calls you will be doing when mutating and breeding Chromosome instances
 	 * @return The new generation of individuals.
 	 */
-	public static Chromosome [] Evolve2(Chromosome [] population, City [] cityList, double currentBest){
+	public static Chromosome [] Evolve2(Chromosome [] population, City [] cityList){
 //		if(population[0].cityList[0] % 2 == 0) {
 //			return translocation(population, cityList);
 //		}else{
@@ -72,7 +72,7 @@ class Evolution{
 
 //		return Crossover.evolveGreedy(population,cityList);
 
-		return GA.evolveChromosome(population, cityList, currentBest);
+		return GA.evolve(population, cityList);
 		//return Crossover.micro(population, cityList);
 		//return pointExchange(population, cityList,4);
 	}

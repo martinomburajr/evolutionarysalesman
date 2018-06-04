@@ -122,6 +122,23 @@ public class Utility {
         return finalArr;
     }
 
+    /**
+     * Returns a gene segment
+     * @param chromosome
+     * @param startIndexIncluding
+     * @param stopIndexExcluding
+     * @return
+     */
+    public static int[] getGeneSegment(Chromosome chromosome, int startIndexIncluding, int stopIndexExcluding) {
+        int range = stopIndexExcluding - startIndexIncluding;
+        int [] arr = new int[range];
+
+        for (int i = 0; i < range; i++) {
+            arr[i] = chromosome.cityList[startIndexIncluding+i];
+        }
+        return arr;
+    }
+
     public static boolean hasEverything(int [] arr, ArrayList<Integer> list) {
         int containCount = 0;
         for (int i = 0; i < arr.length; i++) {

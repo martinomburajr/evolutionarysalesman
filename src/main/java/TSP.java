@@ -337,7 +337,7 @@ public class TSP {
 
     public static Chromosome[] evolve(Chromosome[] chromosomes, City[] city) {
         //Write evolution code here.
-        Chromosome[] evolve = Evolution.Evolve2(chromosomes, city);
+        Chromosome[] evolve = Evolution.evolve(chromosomes, city);
         return evolve;
     }
 

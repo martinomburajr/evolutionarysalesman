@@ -121,16 +121,6 @@ public class Chromosome {
         this.cost = cost;
     }
 
-
-    public boolean contains(int city) {
-        for (int i = 0; i < cityList.length; i++) {
-            if(cityList[i] == city) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Chromosome() {
         this.cityList = new int[50];
     }

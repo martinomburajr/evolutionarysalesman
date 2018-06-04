@@ -35,7 +35,7 @@ public class Mutation {
 
     /**
      * Performs an inversion mutation on a given parent by swapping its random start position and selection
-     * @param chromosome
+     * @param arr
      * @param startInclusive
      * @param endExclusive
      * @param cities
@@ -242,4 +242,98 @@ public class Mutation {
         return newChromosome;
     }
 
+    /**
+     * Performs a simple transposition
+     * @param tour
+     */
+    public static void transposition(Chromosome tour, float mutationRate) {
+        for(int i=0; i < tour.cityList.length; i++){
+            if(Math.random() < mutationRate){
+                int tempCity2 = (int) (tour.cityList.length * Math.random());
+
+                int c1 = tour.cityList[i];
+                int c2 = tour.cityList[tempCity2];
+
+                tour.cityList[tempCity2] =  c1;
+                tour.cityList[i] = c2;
+            }
+        }
+    }
+
+    /**
+     * Performs a greedy mutation
+     * @param chromosome
+     * @param cities
+     * @return
+     */
+    public static Chromosome greedyMutation(Chromosome chromosome, City[] cities)
+    {
+        int [] _tour = chromosome.cityList;
+        int [] _newTour = new int[chromosome.cityList.length];
+        // Get tour size
+        int size = _tour.length;
+
+
+        //CHECK THIS!!
+        System.arraycopy(_tour, 0, _newTour, 0, size);
+
+        // repeat until no improvement is made
+        int improve = 0;
+        int iteration = 0;
+
+        while ( improve < 1)
+        {
+            chromosome.cityList = _tour;
+            double best_distance = chromosome.calculateCost(cities);
+
+            for ( int i = 1; i < size - 1; i++ )
+            {
+                for ( int k = i + 1; k < size; k++)
+                {
+                    greedyMutationSwap(_tour, _newTour, i, k );
+                    iteration++;
+                    Chromosome chromosome1 = new Chromosome(_newTour, cities);
+                    double new_distance = chromosome1.calculateCost(cities);
+
+                    if ( new_distance < best_distance )
+                    {
+                        // Improvement found so reset
+                        improve = 0;
+
+                        for (int j=0;j<size;j++)
+                        {
+                            _tour[j] =  _newTour[j];
+                        }
+
+                        best_distance = new_distance;
+                    }
+                }
+            }
+
+            improve ++;
+        }
+        return new Chromosome(_newTour, cities);
+    }
+
+    private static void greedyMutationSwap(int[] _tour, int[] _newTour, int i, int k)
+    {
+        int size = _tour.length;
+
+        for ( int c = 0; c <= i - 1; ++c )
+        {
+            _newTour[c]= _tour[c];
+        }
+
+        int dec = 0;
+        for ( int c = i; c <= k; ++c )
+        {
+            _newTour[c] = _tour[k - dec];
+            dec++;
+        }
+
+        for ( int c = k + 1; c < size; ++c )
+        {
+            _newTour[c] = _tour[c];
+        }
+    }
 }
